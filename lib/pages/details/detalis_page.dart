@@ -1,10 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:provide/provide.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../provide/goods_detail_info.dart';
 import './components/detail_top_are.dart';
 import './components/details_explan.dart';
 import './components/detail_tabbar.dart';
 import './components/detail_web.dart';
+import './components/details_bottom.dart';
 
 class DetailsPage extends StatelessWidget {
 
@@ -28,15 +30,25 @@ class DetailsPage extends StatelessWidget {
         future: _getGoodsDetailInfo(context),// loading fetch data
         builder: (context, snapshot) {
           if (snapshot.hasData) {
-            return Container(
-              child: ListView(
-                children: <Widget>[
-                  DetailsTopArea(),
-                  DetailExplan(),
-                  DetailTabbar(),
-                  DetailWeb()
-                ],
-              ),
+            return Stack(
+              children: <Widget>[
+                Container(
+                  child: 
+                    ListView(
+                      children: <Widget>[
+                        DetailsTopArea(),
+                        DetailExplan(),
+                        DetailTabbar(), 
+                        DetailWeb()
+                      ],
+                    ),
+                ),
+                Positioned(
+                  bottom: 0,
+                  left: 0,
+                  child: DetailBottom(),
+                )
+              ],
             );
           } else {
             return Text('加载中...');
@@ -49,6 +61,5 @@ class DetailsPage extends StatelessWidget {
   Future _getGoodsDetailInfo(BuildContext context) async {
     await Provide.value<GoodsDetailInfoProvide>(context).getGoodsDetailInfo(goodsId);
     return '加载完成...';
-    // print('数据加载成功....');
   }
 }
