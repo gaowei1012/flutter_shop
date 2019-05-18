@@ -5,20 +5,24 @@ import 'dart:convert';
 class CartProvide with ChangeNotifier {
   String cartString = '[]';
 
-// 保存数据
+// 保存商品数据
   save(goodsId, goodsName, count, price, images) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');// key
-    var temp = cartString = null ? [] : json.decode(cartString);
+
+    var temp = cartString == null ? [] : json.decode(cartString.toString());
     List<Map> tempList = (temp as List).cast();// 转换list
+
     bool isHave = false;
     int ival = 0;
+
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
-        tempList[ival]['count'] = item['count']++;
+        tempList[ival]['count'] = item['count']+1;
         isHave = true;
       }
-      ival++; // 索引递增
+
+      ival+1; // 索引递增
     });
 
 // 如果没有值， 则添加
@@ -39,7 +43,7 @@ class CartProvide with ChangeNotifier {
     notifyListeners(); // 发射数据
   } 
 
-  // 清空数据
+  // 清空商品数据
   remove() async{
      SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('cartInfo');
