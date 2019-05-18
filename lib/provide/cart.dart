@@ -30,13 +30,13 @@ class CartProvide with ChangeNotifier {
         'price': price,
         'images': images
       });
-
-      notifyListeners();
     }
 
     cartString = json.encode(tempList).toString();
     print(cartString);
     prefs.setString('cartInfo', cartString);// 持久化数
+
+    notifyListeners(); // 发射数据
   } 
 
   // 清空数据
