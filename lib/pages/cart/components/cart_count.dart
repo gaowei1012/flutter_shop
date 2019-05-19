@@ -4,6 +4,9 @@ import 'package:provide/provide.dart';
 import '../../../provide/cart.dart';
 
 class CartCount extends StatelessWidget {
+  var item;
+  CartCount(this.item);
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -17,19 +20,21 @@ class CartCount extends StatelessWidget {
       ),
       child: Row(
         children: <Widget>[
-          _reduceBtn(),
+          _reduceBtn(context),
           _content(context),
-          _addBtn()
+          _addBtn(context)
         ],
       ),
     );
   }
 
   // 减少按钮
-  Widget _reduceBtn() {
+  Widget _reduceBtn(context) {
     return Container(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Provide.value<CartProvide>(context).addOrReducerAction(item, 'redcue');
+        },
         child: Container(
           width: ScreenUtil().setHeight(45),
           height: ScreenUtil().setHeight(45),
@@ -39,21 +44,23 @@ class CartCount extends StatelessWidget {
             border: Border(
               right: BorderSide(
                 width: 1,
-                color: Colors.black12
+                color: item.count>1?Colors.black12:Colors.black12
               )
             )
           ),
-          child: Text('-')
+          child: item.count>1 ? Text('-') : Text('')
         ),
       ),
     );
   }
 
   // 加号按钮
-  Widget _addBtn() {
+  Widget _addBtn(context) {
     return Container(
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          Provide.value<CartProvide>(context).addOrReducerAction(item, 'add');
+        },
         child: Container(
           width: ScreenUtil().setHeight(45),
           height: ScreenUtil().setHeight(45),
@@ -75,14 +82,13 @@ class CartCount extends StatelessWidget {
 
   // count 显示区域
   Widget _content(context) {
-    int count = Provide.value<CartProvide>(context).oneCount;
     return Container(
       width: ScreenUtil().setWidth(70),
       height: ScreenUtil().setHeight(45),
       alignment: Alignment.center,
       color: Colors.white,
       child: Text(
-        '1',
+        '${item.count}',
       ),
     );
   }
