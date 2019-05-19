@@ -22,7 +22,19 @@ class DetailBottom extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          _leftIcon(),
+          InkWell(
+            onTap: () {},
+            child: Container(
+              height: ScreenUtil().setHeight(80),
+              width: ScreenUtil().setWidth(110),
+              color: Colors.white,
+              child: Icon(
+                Icons.shopping_cart,
+                size: 25,
+                color: Colors.redAccent,
+              ),
+            )
+          ),
           InkWell(
             onTap: () async {
               await Provide.value<CartProvide>(context).save(goodsId, goodsName, count, price, images);
@@ -61,22 +73,6 @@ class DetailBottom extends StatelessWidget {
           )
         ],
       )
-    );
-  }
-
-  Widget _leftIcon() {
-    return InkWell(
-      onTap: () {},
-      child: Container(
-        height: ScreenUtil().setHeight(80),
-        width: ScreenUtil().setWidth(110),
-        color: Colors.white,
-        child: Icon(
-          Icons.shopping_cart,
-          size: 35,
-          color: Colors.redAccent
-        ),
-      ),
     );
   }
 }
