@@ -22,11 +22,10 @@ class CartProvide with ChangeNotifier {
       if (item['goodsId'] == goodsId) {
         tempList[ival]['count'] = item['count']+1;
         // 数据模型
-        cartList[ival].count+1;
+        cartList[ival].count++;
         isHave = true;
       }
-
-      ival+1; // 索引递增
+      ival++; // 索引递增
     });
 
 // 如果没有值， 则添加
@@ -39,20 +38,58 @@ class CartProvide with ChangeNotifier {
         'images': images
       };
       tempList.add(newGoods);
-      cartList.add(CartInfoModel.fromJson(newGoods)); // 模型的fromdata
+      cartList.add(CartInfoModel.fromJson(newGoods));
     }
 
     cartString = json.encode(tempList).toString();
-    print(cartString);
-    prefs.setString('cartInfo', cartString);// 持久化数
+    print('字符串>>>>>${cartString}');
     print('数据模型>>>${cartList}');
+    prefs.setString('cartInfo', cartString);// 持久化数
 
     notifyListeners(); // 发射数据
   } 
 
+// 添加商品方法
+  // save(goodsId, goodsName, count, price, images) async {
+  //   SharedPreferences prefs = await SharedPreferences.getInstance();
+  //   cartString = prefs.getString('cartInfo');
+
+  //   var temp = cartString == null ? [] : json.decode(cartString.toString());
+  //   List<Map> tempList = (temp as List).cast();
+
+  //   bool isHave = false;
+  //   int ival = 0;
+
+  //   tempList.forEach((item) {
+  //     if (item['goodsId'] == goodsId) {
+  //       tempList[ival]['count'] = item['count']+1;
+  //       isHave = true;
+  //     }
+  //     ival++;
+  //   });
+
+  //   if (!isHave) {
+  //     Map<String, dynamic> newGoods = {
+  //       'goodsId': goodsId,
+  //       'goodsName': goodsName,
+  //       'count': count,
+  //       'price': price,
+  //       'images': images
+  //     };
+  //     tempList.add(newGoods);
+  //   }
+
+  //   cartString = json.encode(tempList.toString());
+  //   print(cartString);
+
+  //   prefs.setString('cartInfo', cartString);
+  //   notifyListeners();
+
+  // }
+
   // 清空商品数据
   remove() async{
-     SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.remove('cartInfo');
     cartList = []; // 清空模型数据
     print('清空完成........');
@@ -60,22 +97,22 @@ class CartProvide with ChangeNotifier {
     notifyListeners();
   }
 
-  // 添加购物车方法
-  getCartInfo() async{
-    // 持久化初始化数据
+// 获得购物车数据
+  getCartInfo() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     cartString = prefs.getString('cartInfo');
+
+  // 清空
     cartList = [];
-    // 如果cartString为空，则添加
     if (cartString == null) {
       cartList = [];
     } else {
-      List<Map> tempList = (json.decode(cartString).toString() as List).cast();
+      List<Map> tempList = (json.decode(cartString.toString())as List).cast(); 
+
       tempList.forEach((item) {
         cartList.add(CartInfoModel.fromJson(item));
       });
     }
-
     notifyListeners();
   }
 }
