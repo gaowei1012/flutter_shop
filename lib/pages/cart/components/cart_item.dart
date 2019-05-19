@@ -9,7 +9,7 @@ class CartItemPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print(item);
+    //print(item);
     return Container(
         margin: EdgeInsets.fromLTRB(5.0,2.0,5.0,2.0),
         padding: EdgeInsets.fromLTRB(5.0,10.0,5.0,10.0),
@@ -21,7 +21,7 @@ class CartItemPage extends StatelessWidget {
         ),
         child: Row(
           children: <Widget>[
-            _cartCheckBt(item),
+            _cartCheckBt(context, item),
             _cartImage(item),
             _cartGoodsName(item),
             _cartPrice(item)
@@ -30,12 +30,12 @@ class CartItemPage extends StatelessWidget {
       );
   }
   //多选按钮
-  Widget _cartCheckBt(item){
+  Widget _cartCheckBt(context ,item){
     return Container(
       child: Checkbox(
-        value: true,
+        value: item.isCheck,
         activeColor:Colors.pink,
-        onChanged: (bool val){},
+        onChanged: (bool val){ },
       ),
     );
   }
@@ -70,25 +70,24 @@ class CartItemPage extends StatelessWidget {
   Widget _cartPrice(item){
 
     return Container(
-        width:ScreenUtil().setWidth(150) ,
-        alignment: Alignment.centerRight,
-        
-        child: Column(
-          children: <Widget>[
-            Text('￥${item.price}'),
-            Container(
-              child: InkWell(
-                onTap: (){},
-                child: Icon(
-                  Icons.delete_forever,
-                  color: Colors.black26,
-                  size: 30,
-                ),
+      width:ScreenUtil().setWidth(150) ,
+      alignment: Alignment.centerRight,
+      
+      child: Column(
+        children: <Widget>[
+          Text('￥${item.price}'),
+          Container(
+            child: InkWell(
+              onTap: (){},
+              child: Icon(
+                Icons.delete_forever,
+                color: Colors.black26,
+                size: 30,
               ),
-            )
-          ],
-        ),
-      );
+            ),
+          )
+        ],
+      ),
+    );
   }
-
 }
