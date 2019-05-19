@@ -23,22 +23,50 @@ class DetailBottom extends StatelessWidget {
       color: Colors.white,
       child: Row(
         children: <Widget>[
-          InkWell(
-            // 跳转到购物车页面
-            onTap: () {
-              Provide.value<CurrentIndexProvide>(context).changeCurrentIndex(2);
-              Navigator.pop(context);
-            },
-            child: Container(
-              height: ScreenUtil().setHeight(80),
-              width: ScreenUtil().setWidth(110),
-              color: Colors.white,
-              child: Icon(
-                Icons.shopping_cart,
-                size: 25,
-                color: Colors.redAccent,
+          Stack(
+            children: <Widget>[
+              InkWell(
+                // 跳转到购物车页面
+                onTap: () {
+                  Provide.value<CurrentIndexProvide>(context).changeCurrentIndex(2);
+                  Navigator.pop(context);
+                },
+                child: Container(
+                  height: ScreenUtil().setHeight(80),
+                  width: ScreenUtil().setWidth(110),
+                  color: Colors.white,
+                  child: Icon(
+                    Icons.shopping_cart,
+                    size: 25,
+                    color: Colors.redAccent,
+                  ),
+                )
               ),
-            )
+              Provide<CartProvide>(
+                builder: (context, child, val) {
+                  int goodsCount = Provide.value<CartProvide>(context).allGoodsCount;
+                  return Positioned(
+                    top: 0,
+                    right: 6,
+                    child: Container(
+                      padding: EdgeInsets.fromLTRB(6, 3, 6, 3),
+                      decoration: BoxDecoration(
+                        color: Colors.pink,
+                        border: Border.all(width: 1, color: Colors.white),
+                        borderRadius: BorderRadius.circular(12.0)
+                      ),
+                      child: Text(
+                        '${goodsCount}',
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: ScreenUtil().setSp(22)
+                        ),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ],
           ),
           InkWell(
             onTap: () async {

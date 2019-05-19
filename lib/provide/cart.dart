@@ -18,9 +18,11 @@ class CartProvide with ChangeNotifier {
 
     var temp = cartString == null ? [] : json.decode(cartString.toString());
     List<Map> tempList = (temp as List).cast();// 转换list
-
+    // 初始化
     bool isHave = false;
     int ival = 0;
+    allPrice = 0;
+    allGoodsCount = 0;
 
     tempList.forEach((item) {
       if (item['goodsId'] == goodsId) {
@@ -29,6 +31,11 @@ class CartProvide with ChangeNotifier {
         cartList[ival].count++;
         isHave = true;
       }
+      // 如果选中
+      if (item['isCheck']) {
+        allPrice += (cartList[ival].price * cartList[ival].count);
+        allGoodsCount += cartList[ival].count;
+      } 
       ival++; // 索引递增
     });
 
@@ -44,6 +51,9 @@ class CartProvide with ChangeNotifier {
       };
       tempList.add(newGoods);
       cartList.add(CartInfoModel.fromJson(newGoods));
+
+      allPrice += (count * price);
+      allGoodsCount += count;
     }
 
     cartString = json.encode(tempList).toString();
