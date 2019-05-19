@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:provide/provide.dart';
 import '../../../provide/cart.dart';
-import '../../../model/cartInfo.dart';
 
 class CartCount extends StatelessWidget {
   @override
@@ -19,7 +18,7 @@ class CartCount extends StatelessWidget {
       child: Row(
         children: <Widget>[
           _reduceBtn(),
-          _content(),
+          _content(context),
           _addBtn()
         ],
       ),
@@ -75,14 +74,15 @@ class CartCount extends StatelessWidget {
   }
 
   // count 显示区域
-  Widget _content() {
+  Widget _content(context) {
+    int count = Provide.value<CartProvide>(context).oneCount;
     return Container(
       width: ScreenUtil().setWidth(70),
       height: ScreenUtil().setHeight(45),
       alignment: Alignment.center,
       color: Colors.white,
       child: Text(
-        '12',
+        '1',
       ),
     );
   }

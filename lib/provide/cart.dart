@@ -6,6 +6,9 @@ import '../model/cartInfo.dart';
 class CartProvide with ChangeNotifier {
   String cartString = '[]';
   List<CartInfoModel> cartList = [];
+  double allPrice = 0;
+  int allGoodsCount = 0;
+  int oneCount = 0;
 
 // 保存商品数据
   save(goodsId, goodsName, count, price, images) async {
@@ -109,8 +112,15 @@ class CartProvide with ChangeNotifier {
       cartList = [];
     } else {
       List<Map> tempList = (json.decode(cartString.toString())as List).cast(); 
-
+      allPrice = 0;
+      allGoodsCount = 0;
+      oneCount = 0;
       tempList.forEach((item) {
+        if (item['isCheck']) {
+          allPrice += (item['count']*item['price']); // 价格
+          allGoodsCount += item['count'];// 商品总数
+          oneCount ++;
+        }
         cartList.add(CartInfoModel.fromJson(item));
       });
     }
