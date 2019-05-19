@@ -14,13 +14,18 @@ class CartPage extends StatelessWidget {
           // 拿到Provide中的cartList数据
           List cartList = Provide.value<CartProvide>(context).cartList;
           if (snapshot.hasData) {
-
             return Stack(
               children: <Widget>[
-                ListView.builder(
-                  itemCount: cartList.length,
-                  itemBuilder: (context, index) {
-                    return CartItemPage(cartList[index]);
+                // 通过provide拿数据过来
+                Provide<CartProvide>(
+                  builder: (context, child, childCatgory) {
+                    cartList = Provide.value<CartProvide>(context).cartList;
+                    return ListView.builder(
+                      itemCount: cartList.length,
+                      itemBuilder: (context, index) {
+                        return CartItemPage(cartList[index]);
+                      },
+                    );
                   },
                 ),
                 Positioned(

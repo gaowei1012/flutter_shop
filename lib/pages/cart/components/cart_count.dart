@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:provide/provide.dart';
+import '../../../provide/cart.dart';
+import '../../../model/cartInfo.dart';
 
 class CartCount extends StatelessWidget {
   @override

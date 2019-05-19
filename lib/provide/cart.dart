@@ -133,7 +133,7 @@ class CartProvide with ChangeNotifier {
       tempIndex++;
     });
     tempList.removeAt(delIndex); // 删除
-    cartString = json.encode(tempList.toString());
+    cartString = json.encode(tempList).toString();
 
     prefs.setString('cartInfo', cartString);
 
