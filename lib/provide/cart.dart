@@ -147,7 +147,29 @@ class CartProvide with ChangeNotifier {
 
     prefs.setString('cartInfo', cartString);
 
-    getCartInfo();
+    await getCartInfo();
+  }
+
+  // 单机单个商品选择按钮
+  changeCheckState(CartInfoModel cartItem) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartString = prefs.getString('cartInfo');
+    List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
+    int changeIndex = 0;
+    int tempIndex = 0;
+    tempList.forEach((item) {
+      if (item['goodsId'] == cartItem.goodsId) {
+        changeIndex = tempIndex;
+      }
+      changeIndex++;
+    });
+    tempList[changeIndex] = cartItem.toJson(); // ==> Map
+    cartString = json.encode(tempList).toString();
+
+    prefs.setString('cartInfo', cartString);
+
+    await getCartInfo();
+
   }
 
 }
