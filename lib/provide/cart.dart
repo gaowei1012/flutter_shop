@@ -59,4 +59,23 @@ class CartProvide with ChangeNotifier {
 
     notifyListeners();
   }
+
+  // 添加购物车方法
+  getCartInfo() async{
+    // 持久化初始化数据
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartString = prefs.getString('cartInfo');
+    cartList = [];
+    // 如果cartString为空，则添加
+    if (cartString == null) {
+      cartList = [];
+    } else {
+      List<Map> tempList = (json.decode(cartString).toString() as List).cast();
+      tempList.forEach((item) {
+        cartList.add(CartInfoModel.fromJson(item));
+      });
+    }
+
+    notifyListeners();
+  }
 }
