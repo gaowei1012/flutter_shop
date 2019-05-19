@@ -122,9 +122,9 @@ class IndexPage extends StatelessWidget {
       builder: (context, child, val) {
         int currentIndex = Provide.value<CurrentIndexProvide>(context).currnetIndex;
         return Scaffold(
-          appBar: AppBar(
-            title: Text('百姓生活+'),
-          ),
+          // appBar: AppBar(
+          //   title: Text('百姓生活+'),
+          // ),
           body: Scaffold(
             backgroundColor: Color.fromRGBO(244, 245, 245, 1.0),
             bottomNavigationBar: BottomNavigationBar(

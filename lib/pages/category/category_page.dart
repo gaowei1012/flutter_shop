@@ -12,6 +12,9 @@ class _CategoryPageState extends State<CategoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('商品分类'),
+      ),
       body: Container(
         child: Row(
           children: <Widget>[
