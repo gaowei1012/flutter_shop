@@ -6,6 +6,7 @@ import './provide/child_category.dart';
 import './provide/category_good_list.dart';
 import './provide/goods_detail_info.dart';
 import './provide/cart.dart';
+import './provide/currentIndex.dart';
 import 'package:fluro/fluro.dart';
 import './routers/router.dart';
 import './routers/application.dart';
@@ -13,6 +14,7 @@ import './routers/application.dart';
 void main() {
   // 添加provider状态管理
   // var counter = Counter();
+  var currentIndexProvide = CurrentIndexProvide();
   var childCategory = ChildCategory();
   var categoryGoodsListProvide = CategoryGoodsListProvide();
   var goodsDetailInfoProvide = GoodsDetailInfoProvide();
@@ -20,6 +22,7 @@ void main() {
   var providers = Providers();
   providers
     // ..provide(Provider<Counter>.value(counter))
+    ..provide(Provider<CurrentIndexProvide>.value(currentIndexProvide))
     ..provide(Provider<ChildCategory>.value(childCategory))
     ..provide(Provider<CategoryGoodsListProvide>.value(categoryGoodsListProvide))
     ..provide(Provider<GoodsDetailInfoProvide>.value(goodsDetailInfoProvide))
