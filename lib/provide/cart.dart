@@ -9,6 +9,7 @@ class CartProvide with ChangeNotifier {
   double allPrice = 0;
   int allGoodsCount = 0;
   int oneCount = 0;
+  bool isOrCheck = true; // 是否全选
 
 // 保存商品数据
   save(goodsId, goodsName, count, price, images) async {
@@ -112,14 +113,18 @@ class CartProvide with ChangeNotifier {
       cartList = [];
     } else {
       List<Map> tempList = (json.decode(cartString.toString())as List).cast(); 
+      // 初始化
       allPrice = 0;
       allGoodsCount = 0;
       oneCount = 0;
+      isOrCheck = true;
       tempList.forEach((item) {
         if (item['isCheck']) {
           allPrice += (item['count']*item['price']); // 价格
           allGoodsCount += item['count'];// 商品总数
-          oneCount ++;
+          //oneCount ++;
+        } else {
+          isOrCheck = false;
         }
         cartList.add(CartInfoModel.fromJson(item));
       });
@@ -170,6 +175,24 @@ class CartProvide with ChangeNotifier {
 
     await getCartInfo();
 
+  }
+
+  // 点击全选按钮操作
+  changeOrCheckBtState(bool isCheck) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    cartString = prefs.getString('cartInfo');
+    List<Map> tempList = (json.decode(cartString.toString()) as List).cast();
+    List<Map> newList = [];
+
+    tempList.forEach((item) {
+      var newItem = item;
+      newItem['isCheck'] = isCheck;
+      newList.add(newItem);
+    });
+    cartString = json.encode(newList).toString();
+    prefs.setString('cartInfo', cartString);
+    
+    await getCartInfo();
   }
 
 }

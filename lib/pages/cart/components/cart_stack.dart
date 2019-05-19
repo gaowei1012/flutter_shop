@@ -25,13 +25,16 @@ class CartBottomPage extends StatelessWidget {
 
 // 左边的全选组件
   Widget _cartSelectBt(context) {
+    bool isOrCheck = Provide.value<CartProvide>(context).isOrCheck;
     return Container(
       child: Row(
         children: <Widget>[
           Checkbox(
-            value: true,
+            value: isOrCheck,
             activeColor: Colors.pink,
-            onChanged: (bool val) {},
+            onChanged: (bool val) {
+              Provide.value<CartProvide>(context).changeOrCheckBtState(val);
+            },
           ),
           Text(
             '全选'
