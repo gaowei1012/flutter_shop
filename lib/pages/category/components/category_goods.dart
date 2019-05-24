@@ -155,6 +155,7 @@ class _CategoryGoodsState extends State<CategoryGoods> {
       'categorySubId': Provide.value<ChildCategory>(context).subId, // 拿到子类ID
       'page': Provide.value<ChildCategory>(context).page, // 页数
     };
+    print('data =====> ${data}');
     await request('getMallGoods', formData: data).then((val) {
       var data = json.decode(val.toString());
       CategoryGoodsListModel categoryGoodsList = CategoryGoodsListModel.fromJson(data);
